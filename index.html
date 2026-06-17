@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>בת המצווה של עמית · 17.6</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Suez+One&family=Assistant:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --night:#241133;
+  --plum:#3b1c52;
+  --rose:#ff7bb0;
+  --rose-soft:#ffb6d4;
+  --gold:#ffd372;
+  --gold-deep:#f0a93a;
+  --lilac:#c9a6ff;
+  --cream:#fff4e8;
+  --ink:#fff8f2;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Assistant',sans-serif;
+  background:linear-gradient(180deg,#1c0e2b 0%, #2c1244 35%, #4a1d5e 70%, #6e2a63 100%);
+  color:var(--ink);
+  overflow-x:hidden;
+  min-height:100vh;
+}
+
+/* ===== animated background canvas ===== */
+#bg{
+  position:fixed;
+  inset:0;
+  width:100%;
+  height:100%;
+  z-index:0;
+  pointer-events:none;
+}
+
+/* glow blobs */
+.glow{
+  position:fixed;
+  border-radius:50%;
+  filter:blur(70px);
+  opacity:.35;
+  z-index:0;
+  pointer-events:none;
+  animation:breathe 9s ease-in-out infinite;
+}
+.glow.g1{width:60vw;height:60vw;background:#ff5fa2;top:-12vh;right:-20vw}
+.glow.g2{width:55vw;height:55vw;background:#7b3ff2;bottom:18vh;left:-22vw;animation-delay:-4s}
+.glow.g3{width:45vw;height:45vw;background:#ffb84d;bottom:-12vh;right:-10vw;animation-delay:-7s}
+@keyframes breathe{0%,100%{transform:scale(1)}50%{transform:scale(1.18)}}
+
+/* ===== content ===== */
+.wrap{
+  position:relative;
+  z-index:2;
+  max-width:430px;
+  margin:0 auto;
+  padding:0 20px 60px;
+}
+
+/* hero */
+.hero{
+  min-height:88svh;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  padding-top:8vh;
+}
+.hero .crown{
+  font-size:46px;
+  animation:floaty 3.5s ease-in-out infinite;
+  filter:drop-shadow(0 6px 18px rgba(255,211,114,.45));
+}
+@keyframes floaty{0%,100%{transform:translateY(0) rotate(-4deg)}50%{transform:translateY(-12px) rotate(5deg)}}
+.hero .eyebrow{
+  font-weight:600;
+  letter-spacing:.32em;
+  font-size:13px;
+  color:var(--rose-soft);
+  margin:18px 0 6px;
+}
+.hero h1{
+  font-family:'Suez One',serif;
+  font-size:clamp(58px,19vw,86px);
+  line-height:1.02;
+  background:linear-gradient(135deg,#ffe9b0 10%, #ffd372 40%, #ff8cc0 90%);
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+  filter:drop-shadow(0 4px 24px rgba(255,140,192,.35));
+}
+.hero .sub{
+  margin-top:14px;
+  font-size:17px;
+  font-weight:300;
+  color:#f3dcff;
+}
+.badges{
+  display:flex;
+  gap:10px;
+  margin-top:26px;
+  flex-wrap:wrap;
+  justify-content:center;
+}
+.badge{
+  background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.18);
+  backdrop-filter:blur(8px);
+  border-radius:999px;
+  padding:8px 16px;
+  font-size:14px;
+  font-weight:600;
+  display:flex;
+  align-items:center;
+  gap:6px;
+}
+.scroll-hint{
+  margin-top:7vh;
+  font-size:13px;
+  color:rgba(255,255,255,.55);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:4px;
+}
+.scroll-hint .arrow{
+  font-size:20px;
+  animation:bob 1.6s ease-in-out infinite;
+}
+@keyframes bob{0%,100%{transform:translateY(0);opacity:.5}50%{transform:translateY(7px);opacity:1}}
+
+/* ===== timeline ===== */
+.timeline{
+  position:relative;
+  padding:30px 0 10px;
+}
+.thread{
+  position:absolute;
+  top:0;
+  bottom:0;
+  right:27px;
+  width:3px;
+  border-radius:3px;
+  background:rgba(255,255,255,.12);
+  overflow:hidden;
+}
+.thread .fill{
+  position:absolute;
+  top:0;
+  right:0;
+  width:100%;
+  height:100%;
+  background:linear-gradient(180deg,var(--gold) 0%, var(--rose) 100%);
+  box-shadow:0 0 14px rgba(255,160,90,.8);
+  transition:height .15s linear;
+}
+.stop{
+  position:relative;
+  padding:0 70px 34px 4px;
+}
+body.js .stop{
+  opacity:0;
+  transform:translateY(34px);
+  transition:opacity .65s ease, transform .65s cubic-bezier(.2,.7,.3,1);
+}
+body.js .stop.show{opacity:1;transform:translateY(0)}
+.dot{
+  position:absolute;
+  right:14px;
+  top:4px;
+  width:30px;
+  height:30px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:15px;
+  background:var(--plum);
+  border:2px solid rgba(255,255,255,.25);
+  box-shadow:0 0 0 5px rgba(36,17,51,.85);
+  z-index:2;
+  transition:transform .4s ease, box-shadow .4s ease, border-color .4s;
+}
+.stop.show .dot{transform:scale(1)}
+.stop.dance .dot{border-color:var(--rose)}
+.stop.food .dot{border-color:var(--gold)}
+.stop.heart .dot{border-color:var(--lilac)}
+.stop.show.dance .dot{box-shadow:0 0 0 5px rgba(36,17,51,.85),0 0 18px rgba(255,123,176,.7)}
+.stop.show.food .dot{box-shadow:0 0 0 5px rgba(36,17,51,.85),0 0 18px rgba(255,211,114,.7)}
+.stop.show.heart .dot{box-shadow:0 0 0 5px rgba(36,17,51,.85),0 0 18px rgba(201,166,255,.7)}
+
+.time{
+  font-family:'Suez One',serif;
+  font-size:22px;
+  letter-spacing:.02em;
+  margin-bottom:2px;
+}
+.dance .time{color:var(--rose-soft)}
+.food .time{color:var(--gold)}
+.heart .time{color:var(--lilac)}
+.t-title{
+  font-size:19px;
+  font-weight:700;
+  margin-bottom:3px;
+}
+.t-desc{
+  font-size:15px;
+  font-weight:300;
+  color:rgba(255,244,232,.75);
+  line-height:1.55;
+}
+.t-desc b{font-weight:600;color:var(--cream)}
+
+/* highlight card for the big "content" moments */
+.stop.big{
+  background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.14);
+  border-radius:20px;
+  padding:18px 70px 18px 16px;
+  margin-left:0;
+  backdrop-filter:blur(10px);
+}
+.stop.big .dot{top:20px}
+.chips{
+  display:flex;
+  flex-wrap:wrap;
+  gap:7px;
+  margin-top:10px;
+}
+.chip{
+  font-size:13px;
+  font-weight:600;
+  padding:5px 12px;
+  border-radius:999px;
+  background:rgba(201,166,255,.14);
+  border:1px solid rgba(201,166,255,.35);
+  color:#e8d8ff;
+}
+
+/* finale */
+.finale{
+  text-align:center;
+  padding:46px 10px 30px;
+}
+.finale .em{
+  font-size:40px;
+  display:inline-block;
+  animation:floaty 3s ease-in-out infinite;
+}
+.finale h2{
+  font-family:'Suez One',serif;
+  font-size:30px;
+  margin-top:10px;
+  background:linear-gradient(135deg,var(--gold) 0%, var(--rose) 100%);
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+}
+.finale p{
+  margin-top:8px;
+  font-weight:300;
+  color:rgba(255,244,232,.7);
+  font-size:15px;
+}
+
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+  #bg{display:none}
+}
+</style>
+</head>
+<body>
+
+<canvas id="bg"></canvas>
+<div class="glow g1"></div>
+<div class="glow g2"></div>
+<div class="glow g3"></div>
+
+<div class="wrap">
+
+  <header class="hero">
+    <div class="crown">👑</div>
+    <div class="eyebrow">בת מצווה</div>
+    <h1>עמית</h1>
+    <div class="sub">חוגגים יחד עם אוהד ונועה 💜</div>
+    <div class="badges">
+      <span class="badge">📅 17.6</span>
+      <span class="badge">🕖 19:00</span>
+      <span class="badge">📍 נריה · פתח תקווה</span>
+    </div>
+    <div class="scroll-hint">
+      גללו ללו״ז הערב
+      <span class="arrow">⌄</span>
+    </div>
+  </header>
+
+  <section class="timeline" id="timeline">
+    <div class="thread"><div class="fill" id="threadFill"></div></div>
+
+    <div class="stop heart">
+      <div class="dot">🎀</div>
+      <div class="time">18:30</div>
+      <div class="t-title">החברות מגיעות</div>
+      <div class="t-desc">מתכנסות ומכינות מארזים יחד</div>
+    </div>
+
+    <div class="stop heart">
+      <div class="dot">📸</div>
+      <div class="time">19:00</div>
+      <div class="t-title">קבלת פנים</div>
+      <div class="t-desc">צילומים, חיוכים וכתיבת ברכות לעמית</div>
+    </div>
+
+    <div class="stop dance">
+      <div class="dot">💃</div>
+      <div class="time">19:45</div>
+      <div class="t-title">פותחים את הרחבה!</div>
+      <div class="t-desc">ריקודי שורות וכל השירים שעמית אוהבת</div>
+    </div>
+
+    <div class="stop food">
+      <div class="dot">🥗</div>
+      <div class="time">20:15</div>
+      <div class="t-title">מנה ראשונה</div>
+    </div>
+
+    <div class="stop heart big">
+      <div class="dot">✨</div>
+      <div class="time">20:30</div>
+      <div class="t-title">הרגע של עמית</div>
+      <div class="t-desc">סרטון דרשה מרגש, מילות תודה מעמית וברכת ההורים</div>
+      <div class="chips">
+        <span class="chip">🎬 סרטון</span>
+        <span class="chip">💬 עמית מודה</span>
+        <span class="chip">💜 אוהד ונועה</span>
+      </div>
+    </div>
+
+    <div class="stop dance">
+      <div class="dot">🪩</div>
+      <div class="time">20:45</div>
+      <div class="t-title">חוזרים לרקוד</div>
+    </div>
+
+    <div class="stop food">
+      <div class="dot">🍽️</div>
+      <div class="time">21:15</div>
+      <div class="t-title">מנה עיקרית</div>
+    </div>
+
+    <div class="stop heart big">
+      <div class="dot">🕯️</div>
+      <div class="time">21:30</div>
+      <div class="t-title">רגעים מהלב</div>
+      <div class="t-desc">מצגת הפתעה וקטעי החברות</div>
+      <div class="chips">
+        <span class="chip">🎞️ מצגת הפתעה</span>
+        <span class="chip">👵 ברכת הסבתות</span>
+        <span class="chip">👯‍♀️ קטעי חברות</span>
+      </div>
+    </div>
+
+    <div class="stop food">
+      <div class="dot">🧁</div>
+      <div class="time">21:45</div>
+      <div class="t-title">קינוחים מתוקים</div>
+    </div>
+
+    <div class="stop dance">
+      <div class="dot">🎉</div>
+      <div class="time">22:30</div>
+      <div class="t-title">סיום בריקוד אחרון</div>
+    </div>
+  </section>
+
+  <footer class="finale">
+    <span class="em">🪩</span>
+    <h2>תקרעו את הרחבה!</h2>
+    <p>מזל טוב עמית 💖</p>
+  </footer>
+
+</div>
+
+<script>
+document.body.classList.add('js');
+/* ====== floating party particles, speed reacts to scroll ====== */
+const canvas = document.getElementById('bg');
+const ctx = canvas.getContext('2d');
+let W, H, DPR;
+
+function resize(){
+  DPR = Math.min(window.devicePixelRatio || 1, 2);
+  W = window.innerWidth; H = window.innerHeight;
+  canvas.width = W * DPR; canvas.height = H * DPR;
+  ctx.setTransform(DPR,0,0,DPR,0,0);
+}
+resize();
+window.addEventListener('resize', resize);
+
+const EMOJI = ['🎵','🎶','💖','✨','🎈','⭐','💜','🩷'];
+const COUNT = Math.min(26, Math.floor(W / 15));
+
+function makeP(spawnBottom){
+  const isEmoji = Math.random() < 0.45;
+  return {
+    x: Math.random() * W,
+    y: spawnBottom ? H + 30 : Math.random() * H,
+    size: isEmoji ? 12 + Math.random()*14 : 1.5 + Math.random()*2.5,
+    speed: 0.25 + Math.random()*0.6,
+    drift: (Math.random()-0.5)*0.4,
+    phase: Math.random()*Math.PI*2,
+    emoji: isEmoji ? EMOJI[Math.floor(Math.random()*EMOJI.length)] : null,
+    alpha: 0.35 + Math.random()*0.5,
+    spin: (Math.random()-0.5)*0.02
+  };
+}
+const parts = Array.from({length: COUNT}, () => makeP(false));
+
+/* scroll velocity → animation boost */
+let lastY = window.scrollY, boost = 1, targetBoost = 1, lastT = performance.now();
+window.addEventListener('scroll', () => {
+  const now = performance.now();
+  const dy = Math.abs(window.scrollY - lastY);
+  const dt = Math.max(now - lastT, 16);
+  const v = dy / dt; // px per ms
+  targetBoost = 1 + Math.min(v * 6, 5); // up to ~6x speed when scrolling fast
+  lastY = window.scrollY; lastT = now;
+}, {passive:true});
+
+const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+function frame(t){
+  // ease boost back to 1
+  targetBoost += (1 - targetBoost) * 0.04;
+  boost += (targetBoost - boost) * 0.12;
+
+  ctx.clearRect(0,0,W,H);
+  for(const p of parts){
+    p.y -= p.speed * boost;
+    p.x += p.drift + Math.sin(t/900 + p.phase) * 0.35 * boost;
+    p.phase += p.spin * boost;
+
+    if(p.y < -40){ Object.assign(p, makeP(true)); }
+    if(p.x < -40) p.x = W + 30;
+    if(p.x > W + 40) p.x = -30;
+
+    ctx.globalAlpha = p.alpha;
+    if(p.emoji){
+      ctx.save();
+      ctx.translate(p.x, p.y);
+      ctx.rotate(Math.sin(p.phase)*0.35);
+      ctx.font = p.size + 'px serif';
+      ctx.textAlign = 'center';
+      ctx.fillText(p.emoji, 0, 0);
+      ctx.restore();
+    } else {
+      // sparkle dot
+      const g = ctx.createRadialGradient(p.x,p.y,0,p.x,p.y,p.size*3);
+      g.addColorStop(0,'rgba(255,225,170,0.9)');
+      g.addColorStop(1,'rgba(255,225,170,0)');
+      ctx.fillStyle = g;
+      ctx.beginPath();
+      ctx.arc(p.x,p.y,p.size*3,0,Math.PI*2);
+      ctx.fill();
+    }
+  }
+  ctx.globalAlpha = 1;
+  requestAnimationFrame(frame);
+}
+if(!reduceMotion) requestAnimationFrame(frame);
+
+/* ====== timeline reveal + glowing thread fill ====== */
+const stops = document.querySelectorAll('.stop');
+if('IntersectionObserver' in window){
+  const io = new IntersectionObserver(entries=>{
+    entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('show'); });
+  },{threshold:0.15, rootMargin:'0px 0px -8% 0px'});
+  stops.forEach(s=>io.observe(s));
+} else {
+  stops.forEach(s=>s.classList.add('show'));
+}
+
+const tl = document.getElementById('timeline');
+const fill = document.getElementById('threadFill');
+fill.style.height = '0%';
+function updateThread(){
+  const r = tl.getBoundingClientRect();
+  const vh = window.innerHeight;
+  const progress = Math.min(Math.max((vh*0.75 - r.top) / r.height, 0), 1);
+  fill.style.height = (progress*100) + '%';
+}
+window.addEventListener('scroll', updateThread, {passive:true});
+updateThread();
+</script>
+</body>
+</html>
